@@ -1,7 +1,7 @@
 package main
 
 import (
-	"csvparserchalleng/src/sum"
+	"csv_parser_challenge/src/sum"
 	"fmt"
 )
 
