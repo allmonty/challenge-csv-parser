@@ -1,7 +1,7 @@
 package sum_test
 
 import (
-	"csv_parser_challenge/src/sum"
+	"csvparserchallenge/src/sum"
 	"testing"
 )
 
