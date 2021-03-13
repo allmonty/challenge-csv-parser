@@ -2,11 +2,13 @@ Rain CSV Parser
 
 Our company needs to parse csv files coming from different employers to create a list of eligible employees to sign up for Rain.
 
-Although files need to have key pieces of data, Rain does not control the overall structure of the files. For example, column names and order can be different from file to file.
+Although files need to have key pieces of data, Rain does not control the overall structure of the files.
+For example, column names and order can be different from file to file.
 
 Your job is to create a parser written in Golang that can read these files and standardize the data to be processed at a later time.
 
-Your code should follow best practices and be clean, well-organized, and bug free. The solution should be scalable, flexible and simple enough to address the requirements we are defining. Please review the useful links below.
+Your code should follow best practices and be clean, well-organized, and bug free.
+The solution should be scalable, flexible and simple enough to address the requirements we are defining. Please review the useful links below.
 
 Observation: Don’t post your project on public online repositories
 

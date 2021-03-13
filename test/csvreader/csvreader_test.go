@@ -2,7 +2,8 @@ package sum_test
 
 import (
 	"csvparserchallenge/src/csvreader"
-	"strings"
+	"csvparserchallenge/src/models"
+	"reflect"
 	"testing"
 )
 
@@ -11,8 +12,9 @@ func TestReadCsvFile(t *testing.T) {
 
 	result := csvreader.ReadCsvFile(filePath)
 
-	expected := [][]string{
-		{"Name", "Email", "Wage", "Number"},
+	expected := models.CSV{}
+	expected.Header = []string{"Name", "Email", "Wage", "Number"}
+	expected.Content = [][]string{
 		{"John Doe", "doe@test.com", "$10.00", "1"},
 		{"Mary Jane", "Mary@tes.com", "$15", "2"},
 		{"Max Topperson", "max@test.com", "$11", "3"},
@@ -20,24 +22,13 @@ func TestReadCsvFile(t *testing.T) {
 		{"Jane Doe", "doe@test.com", "$8.45", "5"},
 	}
 
-	errorInList := false
-	for i, list := range result {
-		if i == 0 {
-			t.Logf("Item %s", list[0])
-			t.Logf("Item %v", []byte(list[0]))
-			t.Logf("Expected %v", []byte(expected[0][0]))
-		}
+	if !reflect.DeepEqual(result.Header, expected.Header) {
+		t.Errorf("No matching result, got: %v, want: %v.", result.Header, expected.Header)
+	}
 
-		for j, item := range list {
-			if strings.Compare(strings.TrimSpace(item), expected[i][j]) != 0 {
-				errorInList = true
-				t.Logf("Item %d is different of %d.", len(item), len(expected[i][j]))
-				t.Logf("Item %s is different of %s.", item, expected[i][j])
-			}
-		}
-		if errorInList {
-			errorInList = false
-			t.Errorf("No matching result, got: %v, want: %v.", list, expected[i])
+	for i, _ := range result.Content {
+		if !reflect.DeepEqual(result.Content[i], expected.Content[i]) {
+			t.Errorf("No matching result, got: %v, want: %v.", result.Content[i], expected.Content[i])
 		}
 	}
 }
@@ -47,8 +38,9 @@ func TestReadCsvFile2(t *testing.T) {
 
 	result := csvreader.ReadCsvFile(filePath)
 
-	expected := [][]string{
-		{"Last", "E-mail", "Salary", "ID", "First"},
+	expected := models.CSV{}
+	expected.Header = []string{"Last", "E-mail", "Salary", "ID", "First"}
+	expected.Content = [][]string{
 		{"Doe", "doe@test.com", "10", "RT1", "John"},
 		{"Jane", "mary@tes.com ", "15", "RT2", "Mary"},
 		{"Topperson", "max@test.com", "11", "RT3", "Max"},
@@ -56,21 +48,13 @@ func TestReadCsvFile2(t *testing.T) {
 		{"Doe", "jane.doe@test.com", "8.45", "RT5", "Jane"},
 	}
 
-	errorInList := false
-	for i, list := range result {
-		if i == 0 {
-			continue
-		}
-		for j, item := range list {
-			if item != expected[i][j] {
-				errorInList = true
-				t.Logf("Item %d is different of %d.", len(item), len(expected[i][j]))
-				t.Logf("Item %s is different of %s.", item, expected[i][j])
-			}
-		}
-		if errorInList {
-			errorInList = false
-			t.Errorf("No matching result, got: %v, want: %v.", list, expected[i])
+	if !reflect.DeepEqual(result.Header, expected.Header) {
+		t.Errorf("No matching result, got: %v, want: %v.", result.Header, expected.Header)
+	}
+
+	for i, _ := range result.Content {
+		if !reflect.DeepEqual(result.Content[i], expected.Content[i]) {
+			t.Errorf("No matching result, got: %v, want: %v.", result.Content[i], expected.Content[i])
 		}
 	}
 }

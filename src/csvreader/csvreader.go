@@ -1,6 +1,7 @@
 package csvreader
 
 import (
+	"csvparserchallenge/src/models"
 	"encoding/csv"
 	"log"
 	"os"
@@ -8,8 +9,16 @@ import (
 	"golang.org/x/text/encoding/unicode"
 )
 
-// ReadCsvFile auto explained
-func ReadCsvFile(filePath string) [][]string {
+/*
+ReadCsvFile - Reads a CSV file and outputs it as an array
+input file example:
+	name,email,salary
+	allan,1@2.com,10
+
+output:
+	[[name, email, salary], [allan, 1@2.com, 10]]
+*/
+func ReadCsvFile(filePath string) models.CSV {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal("Unable to read file "+filePath+"\n", err)
@@ -25,5 +34,8 @@ func ReadCsvFile(filePath string) [][]string {
 		log.Fatal("Unable to parse file as CSV for "+filePath+"\n", err)
 	}
 
-	return records
+	return models.CSV{
+		Header:  records[0],
+		Content: records[1:],
+	}
 }
