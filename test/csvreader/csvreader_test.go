@@ -1,4 +1,4 @@
-package sum_test
+package test
 
 import (
 	"csvparserchallenge/src/csvreader"
