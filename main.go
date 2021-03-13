@@ -17,11 +17,33 @@ func main() {
 	csv3 := csvreader.ReadCsvFile("examples/roster3.csv")
 	csv4 := csvreader.ReadCsvFile("examples/roster4.csv")
 
-	fmt.Println(csvparser.NormalizeHeader(csv1))
-	fmt.Println()
-	fmt.Println(csvparser.NormalizeHeader(csv2))
-	fmt.Println()
-	fmt.Println(csvparser.NormalizeHeader(csv3))
-	fmt.Println()
-	fmt.Println(csvparser.NormalizeHeader(csv4))
+	csv1 = csvparser.NormalizeHeader(csv1)
+	csv2 = csvparser.NormalizeHeader(csv2)
+	csv3 = csvparser.NormalizeHeader(csv3)
+	csv4 = csvparser.NormalizeHeader(csv4)
+
+	fmt.Println(csv1)
+	emailPossibilities := map[string]bool{
+		"email": true,
+	}
+	fmt.Printf("Email is on column %v\n", csvparser.FindColumn(csv2, emailPossibilities))
+	fmt.Println(" ")
+
+	firstNamePossibilities := map[string]bool{
+		"fname":     true,
+		"firstname": true,
+		"first":     true,
+	}
+
+	fmt.Println(csv2)
+	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv2, firstNamePossibilities))
+	fmt.Println(" ")
+
+	fmt.Println(csv3)
+	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv3, firstNamePossibilities))
+	fmt.Println(" ")
+
+	fmt.Println(csv4)
+	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv4, firstNamePossibilities))
+	fmt.Println(" ")
 }
