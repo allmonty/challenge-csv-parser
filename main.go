@@ -22,18 +22,30 @@ func main() {
 	csv3 = csvparser.NormalizeHeader(csv3)
 	csv4 = csvparser.NormalizeHeader(csv4)
 
-	fmt.Println(csv1)
 	emailPossibilities := map[string]bool{
 		"email": true,
 	}
-	fmt.Printf("Email is on column %v\n", csvparser.FindColumn(csv2, emailPossibilities))
-	fmt.Println(" ")
-
+	// namePossibilities := map[string]bool{
+	// 	"email": true,
+	// }
 	firstNamePossibilities := map[string]bool{
 		"fname":     true,
 		"firstname": true,
 		"first":     true,
 	}
+	// lastNamePossibilities := map[string]bool{
+	// 	"lname":    true,
+	// 	"lastname": true,
+	// 	"last":     true,
+	// }
+	// salaryPossibilities := map[string]bool{
+	// 	"salary": true,
+	//  "wage": true,
+	// }
+
+	fmt.Println(csv1)
+	fmt.Printf("Email is on column %v\n", csvparser.FindColumn(csv2, emailPossibilities))
+	fmt.Println(" ")
 
 	fmt.Println(csv2)
 	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv2, firstNamePossibilities))
