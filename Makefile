@@ -1,6 +1,7 @@
 
 run:
-	go run ./src
+	go build
+	go run main.go
 
 test:
 	go test ./test/... -v
