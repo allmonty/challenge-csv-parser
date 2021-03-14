@@ -58,9 +58,14 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 		"salary": true,
 		"wage":   true,
 	}
+	idPossibilities := map[string]bool{
+		"id": true,
+		"employeenumber": true,
+		"empid": true,
+	}
 
 	parsedCSV := models.CSV{
-		Header: []string{"email", "name", "salary"},
+		Header: []string{"email", "name", "salary", "id"},
 	}
 	errorCSV := models.CSV{
 		Header: []string{"error", "content"},
@@ -72,6 +77,7 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 	result["email"] = getColumnOrEmpty(csv, emailPossibilities)
 	result["name"] = getNameColumn(csv, namePossibilities, firstNamePossibilities, lastNamePossibilities)
 	result["salary"] = getColumnOrEmpty(csv, salaryPossibilities)
+	result["id"] = getColumnOrEmpty(csv, idPossibilities)
 
 	for i := range csv.Content {
 		csvLine := []string{}

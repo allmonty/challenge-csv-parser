@@ -9,25 +9,25 @@ import (
 
 func TestParseWithAllNecessaryColumnsAndFilled(t *testing.T) {
 	inputCSV := models.CSV{}
-	inputCSV.Header = []string{"name", "email", "wage", "number"}
+	inputCSV.Header = []string{"name", "email", "wage", "number", "id"}
 	inputCSV.Content = [][]string{
-		{"John Doe", "doe@test.com", "$10.00", "1"},
-		{"Mary Jane", "Mary@tes.com", "$15", "2"},
-		{"Max Topperson", "max@test.com", "$11", "3"},
-		{"Alfred Donald", "alf@test.com", "$11.5", "4"},
-		{"Jane Doe", "doe@test.com", "$8.45", "5"},
+		{"John Doe", "doe@test.com", "$10.00", "1", "a1"},
+		{"Mary Jane", "Mary@tes.com", "$15", "2", "a2"},
+		{"Max Topperson", "max@test.com", "$11", "3", "a3"},
+		{"Alfred Donald", "alf@test.com", "$11.5", "4", "a4"},
+		{"Jane Doe", "doe@test.com", "$8.45", "5", "a5"},
 	}
 
 	result, _ := csvparser.Parse(inputCSV)
 
 	expectedCSV := models.CSV{}
-	expectedCSV.Header = []string{"email", "name", "salary"}
+	expectedCSV.Header = []string{"email", "name", "salary", "id"}
 	expectedCSV.Content = [][]string{
-		{"doe@test.com", "John Doe", "$10.00"},
-		{"Mary@tes.com", "Mary Jane", "$15"},
-		{"max@test.com", "Max Topperson", "$11"},
-		{"alf@test.com", "Alfred Donald", "$11.5"},
-		{"doe@test.com", "Jane Doe", "$8.45"},
+		{"doe@test.com", "John Doe", "$10.00", "a1"},
+		{"Mary@tes.com", "Mary Jane", "$15", "a2"},
+		{"max@test.com", "Max Topperson", "$11", "a3"},
+		{"alf@test.com", "Alfred Donald", "$11.5", "a4"},
+		{"doe@test.com", "Jane Doe", "$8.45", "a5"},
 	}
 
 	if !reflect.DeepEqual(result, expectedCSV) {
@@ -37,24 +37,24 @@ func TestParseWithAllNecessaryColumnsAndFilled(t *testing.T) {
 
 func TestParseWithAllNecessaryColumnsButOneLineWithEmailMissing(t *testing.T) {
 	inputCSV := models.CSV{}
-	inputCSV.Header = []string{"name", "email", "wage", "number"}
+	inputCSV.Header = []string{"name", "email", "wage", "number", "empid"}
 	inputCSV.Content = [][]string{
-		{"John Doe", "doe@test.com", "$10.00", "1"},
-		{"Alfred Donald", "", "$11.5", "4"},
+		{"John Doe", "doe@test.com", "$10.00", "1", "a"},
+		{"Alfred Donald", "", "$11.5", "4", ""},
 	}
 
 	parsedCSV, flaggedCSV := csvparser.Parse(inputCSV)
 
 	expectedParsedCSV := models.CSV{}
-	expectedParsedCSV.Header = []string{"email", "name", "salary"}
+	expectedParsedCSV.Header = []string{"email", "name", "salary", "id"}
 	expectedParsedCSV.Content = [][]string{
-		{"doe@test.com", "John Doe", "$10.00"},
+		{"doe@test.com", "John Doe", "$10.00", "a"},
 	}
 
 	expectedFlaggedCSV := models.CSV{}
 	expectedFlaggedCSV.Header = []string{"error", "content"}
 	expectedFlaggedCSV.Content = [][]string{
-		{"missing email", "Alfred Donald,,$11.5,4"},
+		{"missing email", "Alfred Donald,,$11.5,4,"},
 	}
 
 	if !reflect.DeepEqual(expectedParsedCSV, parsedCSV) {
@@ -79,7 +79,7 @@ func TestParseWithoutNecessaryColumn(t *testing.T) {
 	parsedCSV, flaggedCSV := csvparser.Parse(inputCSV)
 
 	expectedParsedCSV := models.CSV{}
-	expectedParsedCSV.Header = []string{"email", "name", "salary"}
+	expectedParsedCSV.Header = []string{"email", "name", "salary", "id"}
 
 	expectedFlaggedCSV := models.CSV{}
 	expectedFlaggedCSV.Header = []string{"error", "content"}
