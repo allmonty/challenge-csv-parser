@@ -1,0 +1,8 @@
+error,content
+missing email,"Alfred Donald,,$11.5,4"
+missing salary,"John,Doe,doe@test.com,,RT1,4534151414"
+missing salary,"Mary,Jane,mary@tes.com,15,RT2,1448561274"
+missing salary,"Max,Topperson,max@test.com,11,,4534151414"
+missing salary,"Alfred,Donald,alfred@test.com,11.5,RT4,2145385777"
+missing email,"Jane,Doe,,8.45,RT5,"
+missing salary,"John,Doe,doe@test.com,,RT1,453 415 1414"
