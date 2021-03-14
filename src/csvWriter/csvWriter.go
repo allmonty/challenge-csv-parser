@@ -2,7 +2,7 @@ package csvwriter
 
 import (
 	"csvparserchallenge/src/models"
-	"encoding/csv"
+	encondingCSV "encoding/csv"
 	"log"
 	"os"
 )
@@ -11,14 +11,10 @@ import (
 /*
 ReadCsvFile - Given an array of CSV, write them to csv file
 */
-func WriteCsvFile(csvs []models.CSV, fileName string) {
-	records := [][]string{
-		csvs[0].Header,
-	}
-
-	for _, csv := range csvs {
-		records = append(records, csv.Content...)
-	}
+func WriteCsvFile(csv models.CSV, fileName string) {
+	var records [][]string
+	records = append(records, csv.Header)
+	records = append(records, csv.Content...)
 
 	file, error := os.Create(fileName + ".csv")
 	defer file.Close()
@@ -26,7 +22,7 @@ func WriteCsvFile(csvs []models.CSV, fileName string) {
 		log.Fatalln("failed to open file", error)
 	}
 
-	writer := csv.NewWriter(file)
+	writer := encondingCSV.NewWriter(file)
 	defer writer.Flush()
 
 	for _, record := range records {

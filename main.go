@@ -21,6 +21,17 @@ func main() {
 		errorCSVs = append(errorCSVs, errorCSV)
 	}
 
-	csvwriter.WriteCsvFile(parsedCSVs, "result/parsed_candidates")
-	csvwriter.WriteCsvFile(errorCSVs, "result/error_candidates")
+	parsedCSV := models.CSV{Header: parsedCSVs[0].Header}
+	for _, csv := range parsedCSVs {
+		parsedCSV.Content = append(parsedCSV.Content, csv.Content...)
+	}
+	parsedCSV = csvparser.RemoveDuplicatedLine(parsedCSV, "email")
+
+	errorCSV := models.CSV{Header: errorCSVs[0].Header}
+	for _, csv := range errorCSVs {
+		errorCSV.Content = append(errorCSV.Content, csv.Content...)
+	}
+
+	csvwriter.WriteCsvFile(parsedCSV, "result/parsed_candidates")
+	csvwriter.WriteCsvFile(errorCSV, "result/error_candidates")
 }
