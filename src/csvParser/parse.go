@@ -5,12 +5,30 @@ import (
 	"strings"
 )
 
-func getColumnOrEmpty(csv models.CSV, column int) []string {
+func getColumnOrEmpty(csv models.CSV, columNamePossibilities map[string]bool) []string {
+	column := FindColumn(csv, columNamePossibilities)
 	result := GetColumn(csv, column)
 	if len(result) == 0 {
 		result = make([]string, len(csv.Content))
 	}
 	return result
+}
+
+func getNameColumn(csv models.CSV, namePossibilities map[string]bool, firstNamePossibilities map[string]bool, lastNamePossibilities map[string]bool) []string {
+	nameColumnIndex := FindColumn(csv, namePossibilities)
+	nameColumn := GetColumn(csv, nameColumnIndex)
+
+	if len(nameColumn) == 0 {
+		firstNameColumn := getColumnOrEmpty(csv, firstNamePossibilities)
+		lastNameColumn := getColumnOrEmpty(csv, lastNamePossibilities)
+
+		for i := range csv.Content {
+			line := firstNameColumn[i] + " " + lastNameColumn[i]
+			nameColumn = append(nameColumn, line)
+		}
+	}
+
+	return nameColumn
 }
 
 /*
@@ -48,24 +66,10 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 	csv = NormalizeHeader(csv)
 
 	result := map[string][]string{}
-	emailColumn := FindColumn(csv, emailPossibilities)
-	nameColumn := FindColumn(csv, namePossibilities)
-	firstNameColumn := FindColumn(csv, firstNamePossibilities)
-	lastNameColumn := FindColumn(csv, lastNamePossibilities)
-	salaryColumn := FindColumn(csv, salaryPossibilities)
 
-	result["email"] = getColumnOrEmpty(csv, emailColumn)
-	result["name"] = GetColumn(csv, nameColumn)
-	result["firstname"] = GetColumn(csv, firstNameColumn)
-	result["lastname"] = GetColumn(csv, lastNameColumn)
-	result["salary"] = getColumnOrEmpty(csv, salaryColumn)
-
-	if len(result["name"]) == 0 {
-		for i := 0; i < len(csv.Content); i++ {
-			line := result["firstname"][i] + " " + result["lastname"][i]
-			result["name"] = append(result["name"], line)
-		}
-	}
+	result["email"] = getColumnOrEmpty(csv, emailPossibilities)
+	result["name"] = getNameColumn(csv, namePossibilities, firstNamePossibilities, lastNamePossibilities)
+	result["salary"] = getColumnOrEmpty(csv, salaryPossibilities)
 
 	for i, line := range csv.Content {
 		csvLine := []string{}
