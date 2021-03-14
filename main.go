@@ -25,37 +25,38 @@ func main() {
 	emailPossibilities := map[string]bool{
 		"email": true,
 	}
-	// namePossibilities := map[string]bool{
-	// 	"email": true,
-	// }
+	namePossibilities := map[string]bool{
+		"email": true,
+	}
 	firstNamePossibilities := map[string]bool{
 		"fname":     true,
 		"firstname": true,
 		"first":     true,
 	}
-	// lastNamePossibilities := map[string]bool{
-	// 	"lname":    true,
-	// 	"lastname": true,
-	// 	"last":     true,
-	// }
-	// salaryPossibilities := map[string]bool{
-	// 	"salary": true,
-	//  "wage": true,
-	// }
+	lastNamePossibilities := map[string]bool{
+		"lname":    true,
+		"lastname": true,
+		"last":     true,
+	}
+	salaryPossibilities := map[string]bool{
+		"salary": true,
+		"wage":   true,
+	}
 
 	fmt.Println(csv1)
-	fmt.Printf("Email is on column %v\n", csvparser.FindColumn(csv2, emailPossibilities))
-	fmt.Println(" ")
+	result := map[string][]string{}
+	emailColumn := csvparser.FindColumn(csv1, emailPossibilities)
+	nameColumn := csvparser.FindColumn(csv1, namePossibilities)
+	firstNameColumn := csvparser.FindColumn(csv1, firstNamePossibilities)
+	lastNameColumn := csvparser.FindColumn(csv1, lastNamePossibilities)
+	salaryColumn := csvparser.FindColumn(csv1, salaryPossibilities)
 
-	fmt.Println(csv2)
-	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv2, firstNamePossibilities))
-	fmt.Println(" ")
+	result["email"] = csvparser.GetColumn(csv1, emailColumn)
+	result["name"] = csvparser.GetColumn(csv1, nameColumn)
+	result["firstname"] = csvparser.GetColumn(csv1, firstNameColumn)
+	result["lastname"] = csvparser.GetColumn(csv1, lastNameColumn)
+	result["salary"] = csvparser.GetColumn(csv1, salaryColumn)
 
-	fmt.Println(csv3)
-	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv3, firstNamePossibilities))
-	fmt.Println(" ")
-
-	fmt.Println(csv4)
-	fmt.Printf("First name is on column %v\n", csvparser.FindColumn(csv4, firstNamePossibilities))
+	fmt.Printf("Result\n\n%v\n", result)
 	fmt.Println(" ")
 }

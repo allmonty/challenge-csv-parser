@@ -8,11 +8,12 @@ import (
 GetColumn - Get the specified column of a CSV as an array
 */
 func GetColumn(csv models.CSV, column int) []string {
+	columnList := []string{}
+
 	if column < 0 {
-		return []string{}
+		return columnList
 	}
 
-	var columnList []string
 	for _, item := range csv.Content {
 		columnList = append(columnList, item[column])
 	}
