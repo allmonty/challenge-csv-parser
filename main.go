@@ -6,46 +6,19 @@ import (
 	"csvparserchallenge/src/csvreader"
 	"csvparserchallenge/src/models"
 	"fmt"
+	"os"
 )
 
 func main() {
-	csv1 := csvreader.ReadCsvFile("examples/roster1.csv")
-	csv2 := csvreader.ReadCsvFile("examples/roster2.csv")
-	csv3 := csvreader.ReadCsvFile("examples/roster3.csv")
-	csv4 := csvreader.ReadCsvFile("examples/roster4.csv")
+	var parsedCSVs []models.CSV
+	var errorCSVs []models.CSV
 
-	fmt.Println("CSV1=====")
-	fmt.Println(csv1)
-	resultCSV1, errorCSV1 := csvparser.Parse(csv1)
-	fmt.Printf("\n\n%v\n\n", resultCSV1)
-
-	fmt.Println("CSV2=====")
-	fmt.Println(csv2)
-	resultCSV2, errorCSV2 := csvparser.Parse(csv2)
-	fmt.Printf("\n\n%v\n\n", resultCSV2)
-
-	fmt.Println("CSV3=====")
-	fmt.Println(csv3)
-	resultCSV3, errorCSV3 := csvparser.Parse(csv3)
-	fmt.Printf("\n\n%v\n\n", resultCSV3)
-
-	fmt.Println("CSV4=====")
-	fmt.Println(csv4)
-	resultCSV4, errorCSV4 := csvparser.Parse(csv4)
-	fmt.Printf("\n\n%v\n\n", resultCSV4)
-
-	parsedCSVs := []models.CSV{
-		resultCSV1,
-		resultCSV2,
-		resultCSV3,
-		resultCSV4,
-	}
-
-	errorCSVs := []models.CSV{
-		errorCSV1,
-		errorCSV2,
-		errorCSV3,
-		errorCSV4,
+	for _, fileName := range os.Args[1:] {
+		fmt.Printf("======= Processing CSV: %v =====\n\n", fileName)
+		csv := csvreader.ReadCsvFile(fileName)
+		parsedCSV, errorCSV := csvparser.Parse(csv)
+		parsedCSVs = append(parsedCSVs, parsedCSV)
+		errorCSVs = append(errorCSVs, errorCSV)
 	}
 
 	csvwriter.WriteCsvFile(parsedCSVs, "result/parsed_candidates")
