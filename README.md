@@ -12,7 +12,7 @@ Any line with missing required fields will be stored in `flagged.csv` with the r
 
 ### Testing
 
-To run the test just run in the root folder:
+To run the tests execute in the root folder:
 ```sh
 make test
 ```
