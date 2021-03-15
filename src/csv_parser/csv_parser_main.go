@@ -13,7 +13,7 @@ type processedCSV struct {
 }
 
 func processFile(fileName string, c chan processedCSV) {
-	fmt.Printf("=== Processing CSV: %v ===\n", fileName)
+	fmt.Printf("==> Processing CSV: %v\n", fileName)
 	csv := csvreader.ReadCsvFile(fileName)
 	parsedCSV, errorCSV := Parse(csv)
 	processed := processedCSV{
@@ -21,6 +21,7 @@ func processFile(fileName string, c chan processedCSV) {
 		ErrorCSV:  errorCSV,
 	}
 	c <- processed
+	fmt.Printf("=====> DONE processing CSV: %v\n", fileName)
 }
 
 func CSVParserMain(args []string) {
@@ -47,8 +48,19 @@ func CSVParserMain(args []string) {
 	}
 	close(channel)
 
+	fmt.Println("==> Removing duplicates from parsed CSV")
 	parsedCSV = RemoveDuplicatedLine(parsedCSV, "email")
+	fmt.Println("=====> DONE Removing duplicates from parsed CSV")
 
+	fmt.Println("==> Writing parsed CSV")
 	csvwriter.WriteCsvFile(parsedCSV, "result/parsed_candidates")
+	fmt.Println("=====> DONE Writing parsed CSV")
+	fmt.Println("==> Writing error CSV")
 	csvwriter.WriteCsvFile(errorCSV, "result/error_candidates")
+	fmt.Println("=====> DONE Writing parsed CSV")
+
+	fmt.Println("______________________________")
+
+	fmt.Printf("Sucessfuly parsed %v unique rows\n", len(parsedCSV.Content))
+	fmt.Printf("Found %v rows with issues\n", len(errorCSV.Content))
 }
