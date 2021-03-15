@@ -52,14 +52,12 @@ func CSVParserMain(args []string) {
 
 	fmt.Println("==> Removing duplicates from parsed CSV")
 	parsedCSV = RemoveDuplicatedLine(parsedCSV, "email")
-	fmt.Println("=====> DONE Removing duplicates from parsed CSV")
 
 	fmt.Println("==> Writing parsed CSV")
-	csvwriter.WriteCSVFile(parsedCSV, "result/parsed_candidates")
-	fmt.Println("=====> DONE Writing parsed CSV")
+	csvwriter.WriteCSVFile(parsedCSV, "result/parsed")
+
 	fmt.Println("==> Writing error CSV")
-	csvwriter.WriteCSVFile(flaggedCSV, "result/error_candidates")
-	fmt.Println("=====> DONE Writing parsed CSV")
+	csvwriter.WriteCSVFile(flaggedCSV, "result/flagged")
 
 	fmt.Println("______________________________")
 

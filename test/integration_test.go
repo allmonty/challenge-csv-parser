@@ -4,18 +4,11 @@ import (
 	csvparser "csvparserchallenge/src/csv_parser"
 	csvreader "csvparserchallenge/src/csv_reader"
 	"csvparserchallenge/src/models"
-	"log"
 	"os"
 	"reflect"
 	"sort"
 	"testing"
 )
-
-func check(e error) {
-	if e != nil {
-		log.Fatal(e)
-	}
-}
 
 func sortContent(content [][]string, sortIndex int) {
 	sort.SliceStable(content, func(i, j int) bool {
@@ -32,15 +25,13 @@ func TestCSVParserMain(t *testing.T) {
 		"./examples/roster4.csv",
 	}
 
-	e1 := os.Remove("./result/error_candidates.csv")
-	check(e1)
-	e2 := os.Remove("./result/parsed_candidates.csv")
-	check(e2)
+	os.Remove("./result/flagged.csv")
+	os.Remove("./result/parsed.csv")
 
 	csvparser.CSVParserMain(args)
 
-	flaggedCSV := csvreader.ReadCSVFile("./result/error_candidates.csv")
-	parsedCSV := csvreader.ReadCSVFile("./result/parsed_candidates.csv")
+	flaggedCSV := csvreader.ReadCSVFile("./result/flagged.csv")
+	parsedCSV := csvreader.ReadCSVFile("./result/parsed.csv")
 
 	expectedParsedCSV := models.CSV{}
 	expectedParsedCSV.Header = []string{"email", "name", "salary", "id"}
