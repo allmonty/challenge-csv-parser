@@ -39,7 +39,7 @@ func TestCSVParserMain(t *testing.T) {
 
 	csvparser.CSVParserMain(args)
 
-	errorCSV := csvreader.ReadCSVFile("./result/error_candidates.csv")
+	flaggedCSV := csvreader.ReadCSVFile("./result/error_candidates.csv")
 	parsedCSV := csvreader.ReadCSVFile("./result/parsed_candidates.csv")
 
 	expectedParsedCSV := models.CSV{}
@@ -55,9 +55,9 @@ func TestCSVParserMain(t *testing.T) {
 		{"matthew.doe@test.com", "Matthew Doe", "2,451.45", "RT6"},
 	}
 
-	expectedErrorCSV := models.CSV{}
-	expectedErrorCSV.Header = []string{"error", "content"}
-	expectedErrorCSV.Content = [][]string{
+	expectedFlaggedCSV := models.CSV{}
+	expectedFlaggedCSV.Header = []string{"error", "content"}
+	expectedFlaggedCSV.Content = [][]string{
 		{"missing id", "John Doe,doe@test.com,$10.00,1"},
 		{"missing id", "Mary Jane,Mary@tes.com,$15,2"},
 		{"missing id", "Max Topperson,max@test.com,$11,3"},
@@ -73,14 +73,14 @@ func TestCSVParserMain(t *testing.T) {
 
 	sortContent(expectedParsedCSV.Content, 0)
 	sortContent(parsedCSV.Content, 0)
-	sortContent(expectedErrorCSV.Content, 1)
-	sortContent(errorCSV.Content, 1)
+	sortContent(expectedFlaggedCSV.Content, 1)
+	sortContent(flaggedCSV.Content, 1)
 
 	if !reflect.DeepEqual(expectedParsedCSV, parsedCSV) {
 		t.Errorf("No matching result, got: %v, want: %v.", parsedCSV, expectedParsedCSV)
 	}
 
-	if !reflect.DeepEqual(expectedErrorCSV, errorCSV) {
-		t.Errorf("No matching result, got: %v, want: %v.", errorCSV, expectedErrorCSV)
+	if !reflect.DeepEqual(expectedFlaggedCSV, flaggedCSV) {
+		t.Errorf("No matching result, got: %v, want: %v.", flaggedCSV, expectedFlaggedCSV)
 	}
 }

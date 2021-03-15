@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestParseWithAllNecessaryColumnsAndFilled(t *testing.T) {
+func TestParse_WithAllNecessaryColumnsAndFilled_ReturnAllRownsInParsed(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number", "id"}
 	inputCSV.Content = [][]string{
@@ -18,7 +18,7 @@ func TestParseWithAllNecessaryColumnsAndFilled(t *testing.T) {
 		{"Jane Doe", "doe@test.com", "$8.45", "5", "a5"},
 	}
 
-	result, _ := csvparser.Parse(inputCSV)
+	result, flaggedCSV := csvparser.Parse(inputCSV)
 
 	expectedCSV := models.CSV{}
 	expectedCSV.Header = []string{"email", "name", "salary", "id"}
@@ -29,13 +29,18 @@ func TestParseWithAllNecessaryColumnsAndFilled(t *testing.T) {
 		{"alf@test.com", "Alfred Donald", "$11.5", "a4"},
 		{"doe@test.com", "Jane Doe", "$8.45", "a5"},
 	}
+	expectedFlaggedCSV := models.CSV{}
+	expectedFlaggedCSV.Header = []string{"error", "content"}
 
 	if !reflect.DeepEqual(result, expectedCSV) {
 		t.Errorf("No matching result, got: %v, want: %v.", result, expectedCSV)
 	}
+	if !reflect.DeepEqual(expectedFlaggedCSV, flaggedCSV) {
+		t.Errorf("No matching result, got: %v, want: %v.", flaggedCSV, expectedFlaggedCSV)
+	}
 }
 
-func TestParseWithAllNecessaryColumnsButOneLineWithEmailMissing(t *testing.T) {
+func TestParse_WithAllNecessaryColumnsButOneLineWithEmailMissing_ReturnTheOneMissingEmailInFlagged(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number", "empid"}
 	inputCSV.Content = [][]string{
@@ -65,7 +70,7 @@ func TestParseWithAllNecessaryColumnsButOneLineWithEmailMissing(t *testing.T) {
 	}
 }
 
-func TestParseWithoutNecessaryColumn(t *testing.T) {
+func TestParse_WithoutNecessaryColumn_AllLinesGoesToFlagged(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"first name", "last name", "e-mail", "Rate", "Employee", "Number", "Mobile"}
 	inputCSV.Content = [][]string{

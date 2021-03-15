@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestFindColumnForSinglePossibility(t *testing.T) {
+func TestFindColumn_ForSinglePossibility(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number"}
 
@@ -23,7 +23,7 @@ func TestFindColumnForSinglePossibility(t *testing.T) {
 	}
 }
 
-func TestFindColumnForMultiplePossibility(t *testing.T) {
+func TestFindColumn_ForMultiplePossibility_ReturnsTheFirstOneThatMatches(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number"}
 
@@ -42,7 +42,7 @@ func TestFindColumnForMultiplePossibility(t *testing.T) {
 	}
 }
 
-func TestFindColumnWhenNoMatchFound(t *testing.T) {
+func TestFindColumn_WhenNoMatchFound_ReturnsMinusOne(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number"}
 

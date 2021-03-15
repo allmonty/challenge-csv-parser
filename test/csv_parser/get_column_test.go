@@ -29,7 +29,7 @@ func TestGetColumn(t *testing.T) {
 	}
 }
 
-func TestGetColumnWhenColumnIsNegative(t *testing.T) {
+func TestGetColumn_WhenColumnIsNegative_ReturnsEmptyResult(t *testing.T) {
 	inputCSV := models.CSV{}
 	inputCSV.Header = []string{"name", "email", "wage", "number"}
 	inputCSV.Content = [][]string{

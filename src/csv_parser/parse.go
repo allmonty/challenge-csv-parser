@@ -35,7 +35,7 @@ func getNameColumn(csv models.CSV, namePossibilities map[string]bool, firstNameP
 Parse - parse a CSV to one with defined header
 returns:
 - Parsed CSV with the lines that have all necessary columns
-- Error CSV with error reason and content of line
+- Flagged CSV with error reason and content of line
 */
 func Parse(csv models.CSV) (models.CSV, models.CSV) {
 	emailPossibilities := map[string]bool{
@@ -67,7 +67,7 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 	parsedCSV := models.CSV{
 		Header: []string{"email", "name", "salary", "id"},
 	}
-	errorCSV := models.CSV{
+	flaggedCSV := models.CSV{
 		Header: []string{"error", "content"},
 	}
 
@@ -95,12 +95,12 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 
 		if error {
 			errorLineContent := strings.Join(csv.Content[i][:], ",")
-			errorLine := []string{errorMessage, errorLineContent}
-			errorCSV.Content = append(errorCSV.Content, errorLine)
+			flaggedLine := []string{errorMessage, errorLineContent}
+			flaggedCSV.Content = append(flaggedCSV.Content, flaggedLine)
 		} else {
 			parsedCSV.Content = append(parsedCSV.Content, csvLine)
 		}
 	}
 
-	return parsedCSV, errorCSV
+	return parsedCSV, flaggedCSV
 }
