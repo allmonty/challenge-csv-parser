@@ -10,15 +10,15 @@ import (
 )
 
 /*
-ReadCsvFile - Reads a CSV file and outputs it as an array
-input file example:
+ReadCSVFile - Reads a CSV file and outputs it as an array
+> input file example:
 	name,email,salary
 	allan,1@2.com,10
 
-output:
+> output:
 	[[name, email, salary], [allan, 1@2.com, 10]]
 */
-func ReadCsvFile(filePath string) models.CSV {
+func ReadCSVFile(filePath string) models.CSV {
 	file, err := os.Open(filePath)
 	if err != nil {
 		log.Fatal("Unable to read file "+filePath+"\n", err)

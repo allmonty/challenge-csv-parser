@@ -7,10 +7,10 @@ import (
 	"testing"
 )
 
-func TestReadCsvFile(t *testing.T) {
+func TestReadCSVFile(t *testing.T) {
 	filePath := "../examples/roster1.csv"
 
-	result := csvreader.ReadCsvFile(filePath)
+	result := csvreader.ReadCSVFile(filePath)
 
 	expected := models.CSV{}
 	expected.Header = []string{"Name", "Email", "Wage", "Number"}
@@ -33,10 +33,10 @@ func TestReadCsvFile(t *testing.T) {
 	}
 }
 
-func TestReadCsvFile2(t *testing.T) {
+func TestReadCSVFile2(t *testing.T) {
 	filePath := "../examples/roster2.csv"
 
-	result := csvreader.ReadCsvFile(filePath)
+	result := csvreader.ReadCSVFile(filePath)
 
 	expected := models.CSV{}
 	expected.Header = []string{"Last", "E-mail", "Salary", "ID", "First"}

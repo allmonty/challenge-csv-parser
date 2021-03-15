@@ -39,8 +39,8 @@ func TestCSVParserMain(t *testing.T) {
 
 	csvparser.CSVParserMain(args)
 
-	errorCSV := csvreader.ReadCsvFile("./result/error_candidates.csv")
-	parsedCSV := csvreader.ReadCsvFile("./result/parsed_candidates.csv")
+	errorCSV := csvreader.ReadCSVFile("./result/error_candidates.csv")
+	parsedCSV := csvreader.ReadCSVFile("./result/parsed_candidates.csv")
 
 	expectedParsedCSV := models.CSV{}
 	expectedParsedCSV.Header = []string{"email", "name", "salary", "id"}

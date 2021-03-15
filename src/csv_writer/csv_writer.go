@@ -9,9 +9,9 @@ import (
 
 // TODO: Test this function
 /*
-ReadCsvFile - Given an array of CSV, write them to csv file
+ReadCSVFile - Given an array of CSV, write them to csv file
 */
-func WriteCsvFile(csv models.CSV, fileName string) {
+func WriteCSVFile(csv models.CSV, fileName string) {
 	var records [][]string
 	records = append(records, csv.Header)
 	records = append(records, csv.Content...)

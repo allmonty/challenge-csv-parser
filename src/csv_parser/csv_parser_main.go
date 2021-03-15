@@ -14,7 +14,7 @@ type processedCSV struct {
 
 func processFile(fileName string, c chan processedCSV) {
 	fmt.Printf("==> Processing CSV: %v\n", fileName)
-	csv := csvreader.ReadCsvFile(fileName)
+	csv := csvreader.ReadCSVFile(fileName)
 	parsedCSV, errorCSV := Parse(csv)
 	processed := processedCSV{
 		ParsedCSV: parsedCSV,
@@ -24,6 +24,8 @@ func processFile(fileName string, c chan processedCSV) {
 	fmt.Printf("=====> DONE processing CSV: %v\n", fileName)
 }
 
+//CSVParserMain - Main function
+//Orquestrates the read, parsing and writing of CSV files
 func CSVParserMain(args []string) {
 	filePaths := args[1:]
 
@@ -53,10 +55,10 @@ func CSVParserMain(args []string) {
 	fmt.Println("=====> DONE Removing duplicates from parsed CSV")
 
 	fmt.Println("==> Writing parsed CSV")
-	csvwriter.WriteCsvFile(parsedCSV, "result/parsed_candidates")
+	csvwriter.WriteCSVFile(parsedCSV, "result/parsed_candidates")
 	fmt.Println("=====> DONE Writing parsed CSV")
 	fmt.Println("==> Writing error CSV")
-	csvwriter.WriteCsvFile(errorCSV, "result/error_candidates")
+	csvwriter.WriteCSVFile(errorCSV, "result/error_candidates")
 	fmt.Println("=====> DONE Writing parsed CSV")
 
 	fmt.Println("______________________________")

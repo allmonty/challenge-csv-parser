@@ -5,7 +5,7 @@ import (
 )
 
 /*
-RemoveDuplicatedLine -
+RemoveDuplicatedLine - Given a CSV removes every line from content that is duplicated base on key (column)
 */
 func RemoveDuplicatedLine(csv models.CSV, key string) models.CSV {
 	knownLines := map[string]bool{}
