@@ -25,32 +25,29 @@ func processFile(fileName string, c chan processedCSV) {
 
 func CSVParserMain(args []string) {
 	filePaths := args[1:]
-	var parsedCSVs []models.CSV
-	var errorCSVs []models.CSV
+
+	var parsedCSV models.CSV
+	var errorCSV models.CSV
 
 	channel := make(chan processedCSV)
-
 	for _, fileName := range filePaths {
 		go processFile(fileName, channel)
 	}
 
-	for range filePaths {
+	for i := range filePaths {
 		processed := <-channel
-		parsedCSVs = append(parsedCSVs, processed.ParsedCSV)
-		errorCSVs = append(errorCSVs, processed.ErrorCSV)
+
+		if i == 0 {
+			parsedCSV.Header = processed.ParsedCSV.Header
+			errorCSV.Header = processed.ErrorCSV.Header
+		}
+
+		parsedCSV.Content = append(parsedCSV.Content, processed.ParsedCSV.Content...)
+		errorCSV.Content = append(errorCSV.Content, processed.ErrorCSV.Content...)
 	}
 	close(channel)
 
-	parsedCSV := models.CSV{Header: parsedCSVs[0].Header}
-	for _, csv := range parsedCSVs {
-		parsedCSV.Content = append(parsedCSV.Content, csv.Content...)
-	}
 	parsedCSV = RemoveDuplicatedLine(parsedCSV, "email")
-
-	errorCSV := models.CSV{Header: errorCSVs[0].Header}
-	for _, csv := range errorCSVs {
-		errorCSV.Content = append(errorCSV.Content, csv.Content...)
-	}
 
 	csvwriter.WriteCsvFile(parsedCSV, "result/parsed_candidates")
 	csvwriter.WriteCsvFile(errorCSV, "result/error_candidates")
