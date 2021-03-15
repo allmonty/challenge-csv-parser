@@ -1,10 +1,9 @@
-email,name,salary
-doe@test.com,John Doe,$10.00
-Mary@tes.com,Mary Jane,$15
-max@test.com,Max Topperson,$11
-mary@tes.com ,Mary Jane,15
-alfred@test.com,Alfred Donald,11.5
-jane.doe@test.com,Jane Doe,8.45
-mary@tes.com,Mary Jane,15
-maxtest.com,Max Topperson,11
-matthew.doe@test.com,Matthew Doe,"2,451.45"
+email,name,salary,id
+doe@test.com,John Doe,10,RT1
+mary@tes.com ,Mary Jane,15,RT2
+max@test.com,Max Topperson,11,RT3
+alfred@test.com,Alfred Donald,11.5,RT4
+jane.doe@test.com,Jane Doe,8.45,RT5
+mary@tes.com,Mary Jane,15,RT2
+maxtest.com,Max Topperson,11,RT3
+matthew.doe@test.com,Matthew Doe,"2,451.45",RT6

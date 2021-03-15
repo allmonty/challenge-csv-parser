@@ -1,5 +1,9 @@
 error,content
+missing id,"John Doe,doe@test.com,$10.00,1"
+missing id,"Mary Jane,Mary@tes.com,$15,2"
+missing id,"Max Topperson,max@test.com,$11,3"
 missing email,"Alfred Donald,,$11.5,4"
+missing id,"Jane Doe,doe@test.com,$8.45,5"
 missing salary,"John,Doe,doe@test.com,,RT1,4534151414"
 missing salary,"Mary,Jane,mary@tes.com,15,RT2,1448561274"
 missing salary,"Max,Topperson,max@test.com,11,,4534151414"

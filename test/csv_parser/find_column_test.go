@@ -1,7 +1,7 @@
 package test
 
 import (
-	csvparser "csvparserchallenge/src/csvParser"
+	csvparser "csvparserchallenge/src/csv_parser"
 	"csvparserchallenge/src/models"
 	"testing"
 )

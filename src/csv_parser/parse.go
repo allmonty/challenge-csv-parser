@@ -59,9 +59,9 @@ func Parse(csv models.CSV) (models.CSV, models.CSV) {
 		"wage":   true,
 	}
 	idPossibilities := map[string]bool{
-		"id": true,
+		"id":             true,
 		"employeenumber": true,
-		"empid": true,
+		"empid":          true,
 	}
 
 	parsedCSV := models.CSV{
