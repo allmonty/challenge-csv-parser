@@ -7,18 +7,39 @@ import (
 	"fmt"
 )
 
+type processedCSV struct {
+	ParsedCSV models.CSV
+	ErrorCSV  models.CSV
+}
+
+func processFile(fileName string, c chan processedCSV) {
+	fmt.Printf("=== Processing CSV: %v ===\n", fileName)
+	csv := csvreader.ReadCsvFile(fileName)
+	parsedCSV, errorCSV := Parse(csv)
+	processed := processedCSV{
+		ParsedCSV: parsedCSV,
+		ErrorCSV:  errorCSV,
+	}
+	c <- processed
+}
+
 func CSVParserMain(args []string) {
 	filePaths := args[1:]
 	var parsedCSVs []models.CSV
 	var errorCSVs []models.CSV
 
+	channel := make(chan processedCSV)
+
 	for _, fileName := range filePaths {
-		fmt.Printf("=== Processing CSV: %v ===\n", fileName)
-		csv := csvreader.ReadCsvFile(fileName)
-		parsedCSV, errorCSV := Parse(csv)
-		parsedCSVs = append(parsedCSVs, parsedCSV)
-		errorCSVs = append(errorCSVs, errorCSV)
+		go processFile(fileName, channel)
 	}
+
+	for range filePaths {
+		processed := <-channel
+		parsedCSVs = append(parsedCSVs, processed.ParsedCSV)
+		errorCSVs = append(errorCSVs, processed.ErrorCSV)
+	}
+	close(channel)
 
 	parsedCSV := models.CSV{Header: parsedCSVs[0].Header}
 	for _, csv := range parsedCSVs {

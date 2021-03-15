@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -14,6 +15,12 @@ func check(e error) {
 	if e != nil {
 		log.Fatal(e)
 	}
+}
+
+func sortContent(content [][]string, sortIndex int) {
+	sort.SliceStable(content, func(i, j int) bool {
+		return content[i][sortIndex] < content[j][sortIndex]
+	})
 }
 
 func TestCSVParserMain(t *testing.T) {
@@ -63,6 +70,11 @@ func TestCSVParserMain(t *testing.T) {
 		{"missing email", "Jane,Doe,,8.45,RT5,"},
 		{"missing salary", "John,Doe,doe@test.com,,RT1,453 415 1414"},
 	}
+
+	sortContent(expectedParsedCSV.Content, 0)
+	sortContent(parsedCSV.Content, 0)
+	sortContent(expectedErrorCSV.Content, 1)
+	sortContent(errorCSV.Content, 1)
 
 	if !reflect.DeepEqual(expectedParsedCSV, parsedCSV) {
 		t.Errorf("No matching result, got: %v, want: %v.", parsedCSV, expectedParsedCSV)
